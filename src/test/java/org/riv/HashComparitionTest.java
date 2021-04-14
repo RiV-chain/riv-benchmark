@@ -1,7 +1,6 @@
 package org.riv;
 
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 
@@ -42,10 +41,10 @@ public class HashComparitionTest extends TestCase {
 
 		int payloadSize = 100 * 1024; // input data size
 		boolean nativeMemory = true; //whether or not to use native memory buffers
-		//Keccak hash = new SHA3(256); //Keccak, SHA3, or SHAKE
+		Keccak hash = new Keccak(256); //Keccak, SHA3, or SHAKE
 		//org.spongycastle.crypto.digests.KeccakDigest hash = new org.spongycastle.crypto.digests.KeccakDigest(256); //Keccak, SHA3, or SHAKE
 		//MessageDigest hash = HashUtil.getDigest();
-		Blake3 hash = Blake3.newInstance();
+		//Blake3 hash = Blake3.newInstance();
 		//int digestSize = hash.digestSize(); //if you are using SHAKE, you could set this to anything.
 		int digestSize = new SHA3(256).digestSize(); //if you are using SHAKE, you could set this to anything.
 		long randomSeed = 13636363L; //the input data seed
@@ -66,8 +65,8 @@ public class HashComparitionTest extends TestCase {
 
 			long begin = System.nanoTime();
 			hash.update(in);
-			out = hash.digest();
-			//hash.reset();
+			out = hash.digestArray();
+			hash.reset();
 			long end = System.nanoTime();
 			long elapse = end - begin;
 
