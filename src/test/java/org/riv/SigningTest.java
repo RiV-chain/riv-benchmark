@@ -26,7 +26,7 @@ public class SigningTest extends TestCase {
 	}
 	
 	 public static void main(String[] args) throws Throwable {
-	    	if(args==null || args.length==1) {
+	    	if(args==null || args.length==0) {
 	    		System.out.println("Test arguments: SignatureVerify, SignatureAggregate, SignatureAggregateVerify\n");
 	    		return;
 	    	}
