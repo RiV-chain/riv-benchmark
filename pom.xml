@@ -19,6 +19,11 @@
 			<version>${version.scastle}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.madgag.spongycastle</groupId>
+			<artifactId>prov</artifactId>
+			<version>${version.scastle}</version>
+		</dependency>
+		<dependency>
 		  <groupId>io.github.rctcwyvrn</groupId>
 		  <artifactId>blake3</artifactId>
 		  <version>${version.blake3}</version>
