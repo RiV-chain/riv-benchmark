@@ -12,7 +12,7 @@ import com.joemelsha.crypto.hash.SHA3;
 import io.github.rctcwyvrn.blake3.Blake3;
 import junit.framework.TestCase;
 
-public class HashComparitionTest extends TestCase {
+public class HashComparisonTest extends TestCase {
 	
 	private static final byte[] testBytes = "This is a string".getBytes(StandardCharsets.UTF_8);
 	
