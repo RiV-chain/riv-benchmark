@@ -27,14 +27,14 @@ public class SigningTest {
 	}
 	
 	 public static void main(String[] args) throws Throwable {
-		args = new String[] {"testSignatureAggregate"};
+
 	    if(args==null || args.length==0) {
-	    		System.out.println("Test arguments: SignatureVerify, SignatureAggregate, SignatureAggregateVerify\n");
+	    		System.out.println("Test arguments: testSignatureVerify, testSignatureAggregate, testSignatureAggregateVerify\n");
 	    		return;
 	    	}
 	    	String test = args[0];
 			System.out.println("Test:"+test);
-			if(test.equals("SignatureVerify")) {
+			if(test.equals("testSignatureVerify")) {
 				testSignatureVerify();
 			} else 
 			if(test.equals("testSignatureAggregate")) {
