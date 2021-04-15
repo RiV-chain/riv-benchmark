@@ -5,28 +5,30 @@ import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.tuweni.bytes.Bytes;
 import org.apache.tuweni.bytes.Bytes48;
 
-import junit.framework.TestCase;
 import tech.pegasys.teku.bls.BLS;
 import tech.pegasys.teku.bls.BLSKeyPair;
 import tech.pegasys.teku.bls.BLSPublicKey;
 import tech.pegasys.teku.bls.BLSSignature;
-import tech.pegasys.teku.bls.impl.blst.BlstBLS12381;
+import tech.pegasys.teku.bls.BLSTestUtil;
+import tech.pegasys.teku.bls.impl.blst.BlstLoader;
 import tech.pegasys.teku.bls.impl.mikuli.MikuliBLS12381;
 
 
-public class SigningTest extends TestCase {
+public class SigningTest {
 	
 	static {
 		 //BLS.setBlsImplementation(MikuliBLS12381.INSTANCE);
-		 BLS.setBlsImplementation(BlstBLS12381.INSTANCE.get());
+		 BLS.setBlsImplementation(BlstLoader.INSTANCE.get());
 	}
 	
 	 public static void main(String[] args) throws Throwable {
-	    	if(args==null || args.length==0) {
+		args = new String[] {"testSignatureAggregate"};
+	    if(args==null || args.length==0) {
 	    		System.out.println("Test arguments: SignatureVerify, SignatureAggregate, SignatureAggregateVerify\n");
 	    		return;
 	    	}
@@ -47,7 +49,7 @@ public class SigningTest extends TestCase {
 			double elapseS = elapseNS / (1000000.0 * 1000.0);
 			double bytesM = bytes / (1024.0 * 1024.0);
 			double mbs = bytesM / elapseS;
-			return NumberFormat.getNumberInstance().format(mbs) + " MB/s";
+			return NumberFormat.getNumberInstance(Locale.ROOT).format(mbs) + " MB/s";
 		}
 		
 		public static void testSignatureVerify() {
@@ -70,7 +72,7 @@ public class SigningTest extends TestCase {
 				long bytes = in.length;
 				
 			    Bytes m = Bytes.wrap(in);
-			    BLSKeyPair keyPair = BLSKeyPair.random(1);
+			    BLSKeyPair keyPair = BLSTestUtil.randomKeyPair(1);
 			    
 				BLSSignature sign = BLS.sign(keyPair.getSecretKey(), m);
 				byte[] out = sign.toBytesCompressed().toArray();
@@ -119,7 +121,7 @@ public class SigningTest extends TestCase {
 						gen.nextBytes(in);
 					    Bytes m = Bytes.wrap(in);
 					    messages.add(m);
-					    BLSKeyPair keyPair = BLSKeyPair.random(1);
+					    BLSKeyPair keyPair = BLSTestUtil.randomKeyPair(1);
 						BLSSignature sign = BLS.sign(keyPair.getSecretKey(), m);
 						s.add(sign);
 						pubKeys.add(keyPair.getPublicKey());
@@ -155,7 +157,7 @@ public class SigningTest extends TestCase {
 
 				long totalBytes = 0L,
 					 totalElapse = 0L;
-				int n = 3;
+				int n = 1000;
 				while (true) {
 					gen.setSeed(randomSeed);
 					
@@ -169,7 +171,7 @@ public class SigningTest extends TestCase {
 						gen.nextBytes(in);
 					    Bytes m = Bytes.wrap(in);
 					    messages.add(m);
-					    BLSKeyPair keyPair = BLSKeyPair.random(1);
+					    BLSKeyPair keyPair = BLSTestUtil.randomKeyPair(1);
 						BLSSignature sign = BLS.sign(keyPair.getSecretKey(), m);
 						s.add(sign);
 						pubKeys.add(keyPair.getPublicKey());
